@@ -39,12 +39,16 @@ public class Quine_McCluskey {
                 }
             }
             // Initialize Quine_McCluskey object with MTs and DCs
-            Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
+            try {
+                Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
 
-            System.out.println();
-            // Solve and print results
-            qm.solve1();
-            qm.printResults();
+                System.out.println();
+                // Solve and print results
+                qm.solve1();
+                qm.printResults();
+            } catch (RuntimeException e) {
+                System.out.println("\nRUNTIME EXCEPTION: Make sure your don't cares are correct\n");
+            }
 
             System.out.print("Would you like to continue? (yes/no): ");
             continueProgram = userInput.nextLine().toLowerCase();
