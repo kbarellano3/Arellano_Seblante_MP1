@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.*;
 
-// TEST FROM SHEIANNE
 // Hello! Please feel free to change variable names! :)
 // Comments are placeholders only for your own comments.
 // Note: This code does not implement bonus feature yet.
@@ -15,16 +14,24 @@ public class Quine_McCluskey {
         System.out.print("Minterms (separated by space or comma): ");
         String mintermsInput = userInput.nextLine();
 
-        System.out.print("Do you want to include don't cares? (yes/no): ");
-        String includeDontCaresInput = userInput.nextLine().toLowerCase();
         String dontCaresInput = "";
 
-        // If user wants to include don't cares, ask for them
-        if (includeDontCaresInput.equals("yes")) {
-            System.out.print("Don't Cares (separated by space or comma): ");
-            dontCaresInput = userInput.nextLine();
-        }
+        while (true) {
+            System.out.print("Do you want to include don't cares? (yes/no): ");
+            String includeDontCaresInput = userInput.nextLine().toLowerCase();
 
+            // If user wants to include don't cares, ask for them
+            if (includeDontCaresInput.equals("yes")) {
+                System.out.print("Don't Cares (separated by space or comma): ");
+                dontCaresInput = userInput.nextLine();
+            }
+            else if (includeDontCaresInput.equals("no")) {
+                break;
+            }
+            else {
+                System.out.println("Invalid input. Put 'yes' or 'no'.");
+            }
+        }
         // Initialize Quine_McCluskey object with input
         Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
 
