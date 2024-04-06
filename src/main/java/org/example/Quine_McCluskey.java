@@ -5,93 +5,116 @@ import java.util.*;
 // Hello! Please feel free to change variable names! :)
 // Comments are placeholders only for your own comments.
 // Note: This code does not implement bonus feature yet.
+// NOte from Sheianne: error handling when list of don't cares contains some minterms
 
 public class Quine_McCluskey {
 
     public static void main(String[] args) {
-        // Prompt user for minterms and don't cares
-        Scanner userInput = new Scanner(System.in);
-        System.out.print("Minterms (separated by space or comma): ");
-        String mintermsInput = userInput.nextLine();
-
-        String dontCaresInput = "";
-
+        // Loop program until user exits
         while (true) {
-            System.out.print("Do you want to include don't cares? (yes/no): ");
-            String includeDontCaresInput = userInput.nextLine().toLowerCase();
+            // Prompt user for minterms and don't cares
+            Scanner userInput = new Scanner(System.in);
+            System.out.print("Minterms (separated by space or comma): ");
+            String mintermsInput = userInput.nextLine();
 
-            // If user wants to include don't cares, ask for them
-            if (includeDontCaresInput.equals("yes")) {
-                System.out.print("Don't Cares (separated by space or comma): ");
-                dontCaresInput = userInput.nextLine();
+            String dontCaresInput = "";
+            String continueProgram = "";
+
+            // Check for invalid input
+            while (true) {
+                System.out.print("Do you want to include don't cares? (yes/no): ");
+                String includeDontCaresInput = userInput.nextLine().toLowerCase();
+
+                // Ask user if they want to include don't cares
+                if (includeDontCaresInput.equals("yes")) {
+                    System.out.print("Don't Cares (separated by space or comma): ");
+                    dontCaresInput = userInput.nextLine();
+                    break;
+                }
+                else if (includeDontCaresInput.equals("no")) {
+                    break;
+                }
+                else {
+                    System.out.println("Invalid input. Put 'yes' or 'no'.");
+                }
             }
-            else if (includeDontCaresInput.equals("no")) {
+            // Initialize Quine_McCluskey object with MTs and DCs
+            Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
+
+            System.out.println();
+            // Solve and print results
+            qm.solve1();
+            qm.printResults();
+
+            System.out.print("Would you like to continue? (yes/no): ");
+            continueProgram = userInput.nextLine().toLowerCase();
+
+            if (continueProgram.equals("yes")) {
+                System.out.println();
+                continue;
+            }
+            else if (continueProgram.equals("no")) {
                 break;
             }
             else {
-                System.out.println("Invalid input. Put 'yes' or 'no'.");
+                System.out.println("Invalid input. Put 'yes' or 'no'");
+                break;
             }
         }
-        // Initialize Quine_McCluskey object with input
-        Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
-
-        System.out.println();
-        // Solve and print results
-        qm.solve1();
-        qm.printResults();
+        System.out.println("\nThank you for using our program!");
     }
 
 
-    // Represents a term in the boolean function
-    private class Term {
-        private final String term;
+    // Represents a minterm in the boolean function
+    private class Minterm {
+        private final String minterm;
         private int onesCount;
         private final List<Integer> nums;
 
-        // Constructor for initializing term with value and length
-        public Term(int value, int length) {
+        // Constructor for initializing minterm with value and length
+        public Minterm(int value, int length) {
             String binary = Integer.toBinaryString(value);
             StringBuilder temp = new StringBuilder(binary);
             while (temp.length() != length) {
                 temp.insert(0, 0);
             }
-            this.term = temp.toString();
+            this.minterm = temp.toString();
             nums = new ArrayList<>();
             nums.add(value);
 
             // Calculate the count of ones in the term
             onesCount = 0;
-            for (int i = 0; i < term.length(); i++) {
-                if (term.charAt(i) == '1') {
+            for (int i = 0; i < minterm.length(); i++) {
+                if (minterm.charAt(i) == '1') {
                     onesCount++;
                 }
             }
         }
 
         // Constructor for combining two terms
-        public Term(Term term1, Term term2) {
+        public Minterm(Minterm minterm1, Minterm minterm2) {
             StringBuilder temp = new StringBuilder();
-            for (int i = 0; i < term1.getString().length(); i++) {
-                if (term1.getString().charAt(i) != term2.getString().charAt(i)) {
+            for (int i = 0; i < minterm1.getString().length(); i++) {
+                if (minterm1.getString().charAt(i) != minterm2.getString().charAt(i)) {
                     temp.append("-");
                 } else {
-                    temp.append(term1.getString().charAt(i));
+                    temp.append(minterm1.getString().charAt(i));
                 }
             }
-            this.term = temp.toString();
+            this.minterm = temp.toString();
             onesCount = 0;
-            for (int i = 0; i < term.length(); i++) {
-                if (this.term.charAt(i) == '1') {
+            for (int i = 0; i < minterm.length(); i++) {
+                if (this.minterm.charAt(i) == '1') {
                     onesCount++;
                 }
             }
             nums = new ArrayList<>();
-            nums.addAll(term1.getNums());
-            nums.addAll(term2.getNums());
+            nums.addAll(minterm1.getNums());
+            nums.addAll(minterm2.getNums());
         }
 
         String getString() {
-            return term;
+            return minterm;
         }
 
         List<Integer> getNums() {
@@ -104,23 +127,23 @@ public class Quine_McCluskey {
     }
 
 
-    // Comparator for comparing terms based on ones count
-    public static class OnesComparator implements Comparator<Term> {
+    // Comparator for comparing minterms based on ones count
+    public static class OnesComparator implements Comparator<Minterm> {
         @Override
-        public int compare(Term t1, Term t2) {
+        public int compare(Minterm t1, Minterm t2) {
             return t1.getOnesCount() - t2.getOnesCount();
         }
     }
 
-    private final Term[] terms;
+    private final Minterm[] minterms;
     private final ArrayList<Integer> mintermsList;
     private final ArrayList<Integer> dontCaresList;
     private ArrayList<String>[] solution;
     private final ArrayList<String> primeImplicants;
-    private ArrayList<Term> finalTerms;
+    private ArrayList<Minterm> finalMinterms;
     private final int maxBinaryLength;
 
-    // Constrictor for Quine_McCluskey algorithm
+    // Constructor for Quine_McCluskey algorithm
     public Quine_McCluskey(String mintermsString, String dontCaresString) {
         // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
@@ -140,25 +163,25 @@ public class Quine_McCluskey {
         this.mintermsList = new ArrayList<>();
         primeImplicants = new ArrayList<>();
 
-        // Initialize terms array and populate it with terms and don't cares
-        Term[] temp = new Term[minterms.length + dontCares.length];
+        // Initialize minterms array and populate it with minterms and don't cares
+        Minterm[] temp = new Minterm[minterms.length + dontCares.length];
         int index = 0;
         for (int minterm : minterms) {
-            temp[index++] = new Term(minterm, maxBinaryLength);
+            temp[index++] = new Minterm(minterm, maxBinaryLength);
             this.mintermsList.add(minterm);
         }
         for (int dontCare : dontCares) {
             if (Integer.toBinaryString(dontCare).length() > maxBinaryLength) {
                 break;
             }
-            temp[index++] = new Term(dontCare, maxBinaryLength);
+            temp[index++] = new Minterm(dontCare, maxBinaryLength);
             this.dontCaresList.add(dontCare);
         }
-        terms = new Term[index];
-        System.arraycopy(temp, 0, terms, 0, index);
+        this.minterms = new Minterm[index];
+        System.arraycopy(temp, 0, this.minterms, 0, index);
 
         // Sort terms array based on ones count
-        Arrays.sort(terms, new OnesComparator());
+        Arrays.sort(this.minterms, new OnesComparator());
     }
 
     // Validate if minterms and don't cares have no duplicates
@@ -202,24 +225,24 @@ public class Quine_McCluskey {
     }
 
     // Group terms based on ones count
-    private ArrayList<Term>[] groupTerms(Term[] termsArray) {
-        ArrayList<Term>[] groups = new ArrayList[termsArray[termsArray.length - 1].getOnesCount() + 1];
+    private ArrayList<Minterm>[] groupTerms(Minterm[] termsArray) {
+        ArrayList<Minterm>[] groups = new ArrayList[termsArray[termsArray.length - 1].getOnesCount() + 1];
 
         for (int i = 0; i < groups.length; i++) {
             groups[i] = new ArrayList<>();
         }
-        for (Term term : termsArray) {
-            int k = term.getOnesCount();
-            groups[k].add(term);
+        for (Minterm minterm : termsArray) {
+            int k = minterm.getOnesCount();
+            groups[k].add(minterm);
         }
         return groups;
     }
 
-    // Perform first step of Quine_McCluskey algorithm
+    // Perform 1st step of QM: Determine prime implicants from minterms
     public void solve1() {
-        ArrayList<Term> remainingTerms = new ArrayList<>();
-        ArrayList<Term>[] groupedTerms = groupTerms(terms);
-        ArrayList<Term>[] results;
+        ArrayList<Minterm> remainingMinterms = new ArrayList<>();
+        ArrayList<Minterm>[] groupedTerms = groupTerms(minterms);
+        ArrayList<Minterm>[] results;
 
         boolean inserted;
         do {
@@ -240,22 +263,22 @@ public class Quine_McCluskey {
                             combinedTerms.add(groupedTerms[i].get(j).getString());
                             combinedTerms.add(groupedTerms[i + 1].get(k).getString());
 
-                            Term newTerm = new Term(groupedTerms[i].get(j), groupedTerms[i + 1].get(k));
-                            if (!temp.contains(newTerm.getString())) {
-                                results[i].add(newTerm);
+                            Minterm newMinterm = new Minterm(groupedTerms[i].get(j), groupedTerms[i + 1].get(k));
+                            if (!temp.contains(newMinterm.getString())) {
+                                results[i].add(newMinterm);
                                 inserted = true;
                             }
-                            temp.add(newTerm.getString());
+                            temp.add(newMinterm.getString());
                         }
                     }
                 }
             }
 
             if (inserted) {
-                for (ArrayList<Term> termArrayList : groupedTerms) {
-                    for (Term term : termArrayList) {
-                        if (!combinedTerms.contains(term.getString())) {
-                            remainingTerms.add(term);
+                for (ArrayList<Minterm> mintermArrayList : groupedTerms) {
+                    for (Minterm minterm : mintermArrayList) {
+                        if (!combinedTerms.contains(minterm.getString())) {
+                            remainingMinterms.add(minterm);
                         }
                     }
                 }
@@ -263,15 +286,15 @@ public class Quine_McCluskey {
             }
         } while (inserted && groupedTerms.length > 1);
 
-        finalTerms = new ArrayList<>();
-        for (ArrayList<Term> termArrayList : groupedTerms) {
-            finalTerms.addAll(termArrayList);
+        finalMinterms = new ArrayList<>();
+        for (ArrayList<Minterm> mintermArrayList : groupedTerms) {
+            finalMinterms.addAll(mintermArrayList);
         }
-        finalTerms.addAll(remainingTerms);
+        finalMinterms.addAll(remainingMinterms);
         solve2();
     }
 
-    // Perform second step of Quine_McCluskey algorithm
+    // Perform 2nd step of QM: Determine product of sums from necessary PIs
     public void solve2() {
         if (!identifyPrimeImplicants()) {
             if (!rowDominance()) {
@@ -289,13 +312,13 @@ public class Quine_McCluskey {
         }
     }
 
-    // Apply Petrick's method for minimization
+    // Petrick's method; Used to find essential and additional PIs
     void petricksMethod() {
         List<List<String>> temp = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
             temp.add(new ArrayList<>());
-            for (int j = 0; j < finalTerms.size(); j++) {
-                if (finalTerms.get(j).getNums().contains(mintermsList.get(i))) {
+            for (int j = 0; j < finalMinterms.size(); j++) {
+                if (finalMinterms.get(j).getNums().contains(mintermsList.get(i))) {
                     char t = (char) ('a' + j);
                     temp.get(i).add(t + "");
                 }
@@ -324,7 +347,7 @@ public class Quine_McCluskey {
             if (c.length() == min) {
                 solution[k] = new ArrayList<>();
                 for (int i = 0; i < c.length(); i++) {
-                    solution[k].add(finalTerms.get((int) c.charAt(i) - 'a').getString());
+                    solution[k].add(finalMinterms.get((int) c.charAt(i) - 'a').getString());
                 }
                 for (String primeTerm : primeImplicants) {
                     solution[k].add(primeTerm);
@@ -334,12 +357,12 @@ public class Quine_McCluskey {
         }
     }
 
-    // Combine terms into a single term
-    String mixTerms(String term1, String term2) {
+    // Combine minterms and don't cares into a single binary string
+    String mixTerms(String minterm1, String minterm2) {
         StringBuilder mixed = new StringBuilder();
         boolean[] added = new boolean[256];
 
-        for (char c : term1.toCharArray()) {
+        for (char c : minterm1.toCharArray()) {
             char upperCaseC = Character.toUpperCase(c);
             if (c != '-' && !added[upperCaseC]) {
                 mixed.append(c);
@@ -347,7 +370,7 @@ public class Quine_McCluskey {
             }
         }
 
-        for (char c : term2.toCharArray()) {
+        for (char c : minterm2.toCharArray()) {
             char upperCaseC = Character.toUpperCase(c);
             if (c != '-' && !added[upperCaseC]) {
                 mixed.append(c);
@@ -383,8 +406,8 @@ public class Quine_McCluskey {
         List<List<Integer>> cols = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
             cols.add(new ArrayList<>());
-            for (int j = 0; j < finalTerms.size(); j++) {
-                if (finalTerms.get(j).getNums().contains(mintermsList.get(i))) {
+            for (int j = 0; j < finalMinterms.size(); j++) {
+                if (finalMinterms.get(j).getNums().contains(mintermsList.get(i))) {
                     cols.get(i).add(j);
                 }
             }
@@ -411,14 +434,14 @@ public class Quine_McCluskey {
     // Perform row dominance checking
     private boolean rowDominance() {
         boolean flag = false;
-        for (int i = 0; i < finalTerms.size() - 1; i++) {
-            for (int j = i + 1; j < finalTerms.size(); j++) {
-                if (contains(finalTerms.get(i), finalTerms.get(j))) {
-                    finalTerms.remove(j);
+        for (int i = 0; i < finalMinterms.size() - 1; i++) {
+            for (int j = i + 1; j < finalMinterms.size(); j++) {
+                if (contains(finalMinterms.get(i), finalMinterms.get(j))) {
+                    finalMinterms.remove(j);
                     j--;
                     flag = true;
-                } else if (contains(finalTerms.get(j), finalTerms.get(i))) {
-                    finalTerms.remove(i);
+                } else if (contains(finalMinterms.get(j), finalMinterms.get(i))) {
+                    finalMinterms.remove(i);
                     i--;
                     flag = true;
                     break;
@@ -433,8 +456,8 @@ public class Quine_McCluskey {
         List<List<Integer>> cols = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
             cols.add(new ArrayList<>());
-            for (int j = 0; j < finalTerms.size(); j++) {
-                if (finalTerms.get(j).getNums().contains(mintermsList.get(i))) {
+            for (int j = 0; j < finalMinterms.size(); j++) {
+                if (finalMinterms.get(j).getNums().contains(mintermsList.get(i))) {
                     cols.get(i).add(j);
                 }
             }
@@ -443,7 +466,7 @@ public class Quine_McCluskey {
         for (int i = 0; i < mintermsList.size(); i++) {
             if (cols.get(i).size() == 1) {
                 flag = true;
-                List<Integer> del = finalTerms.get(cols.get(i).get(0)).getNums();
+                List<Integer> del = finalMinterms.get(cols.get(i).get(0)).getNums();
 
                 for (int j = 0; j < mintermsList.size(); j++) {
                     if (del.contains(mintermsList.get(j))) {
@@ -452,33 +475,33 @@ public class Quine_McCluskey {
                         j--;
                     }
                 }
-                primeImplicants.add(finalTerms.get(cols.get(i).get(0)).getString());
-                finalTerms.remove(cols.get(i).get(0).intValue());
+                primeImplicants.add(finalMinterms.get(cols.get(i).get(0)).getString());
+                finalMinterms.remove(cols.get(i).get(0).intValue());
                 break;
             }
         }
         return flag;
     }
 
-    // Check if two terms are a valid combination
-    boolean isValidCombination(Term term1, Term term2) {
-        if (term1.getString().length() != term2.getString().length())
+    // Check if two minterms are a valid combination
+    boolean isValidCombination(Minterm minterm1, Minterm minterm2) {
+        if (minterm1.getString().length() != minterm2.getString().length())
             return false;
 
         int k = 0;
-        for (int i = 0; i < term1.getString().length(); i++) {
-            if (term1.getString().charAt(i) == '-' && term2.getString().charAt(i) != '-')
+        for (int i = 0; i < minterm1.getString().length(); i++) {
+            if (minterm1.getString().charAt(i) == '-' && minterm2.getString().charAt(i) != '-')
                 return false;
-            else if (term1.getString().charAt(i) != '-' && term2.getString().charAt(i) == '-')
+            else if (minterm1.getString().charAt(i) != '-' && minterm2.getString().charAt(i) == '-')
                 return false;
-            else if (term1.getString().charAt(i) != term2.getString().charAt(i))
+            else if (minterm1.getString().charAt(i) != minterm2.getString().charAt(i))
                 k++;
         }
         return k == 1;
     }
 
-    // Check if one terms contains another
-    boolean contains(Term term1, Term term2) {
+    // Check if one minterm contains another
+    boolean contains(Minterm term1, Minterm term2) {
         if (term1.getNums().size() <= term2.getNums().size()) {
             return false;
         }
@@ -508,7 +531,7 @@ public class Quine_McCluskey {
         return result.toString();
     }
 
-    // Print the final results
+    // Print the final result/s
     public void printResults() {
         for (int i = 0; i < solution.length; i++) {
             System.out.println("Solution " + (i + 1) + ":");
