@@ -10,7 +10,7 @@ This program simplifies boolean expressions using Java. It employs 10 variables 
 The simplified boolean expression should be:
 **x'y'z + w'xz' + xyz + wx'**
 
-## Bonus Points
+## Bonus Feature
 Users can implement their own variable names (e.g., 'a', 'b', 'c', 'd' instead of 'w', 'x', 'y', 'z').
 
 ## Expected Deliverables
