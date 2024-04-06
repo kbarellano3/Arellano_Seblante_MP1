@@ -4,6 +4,7 @@ import java.util.*;
 
 // Hello! Please feel free to change variable names! :)
 // Comments are placeholders only for your own comments.
+// Note: This code does not implement bonus feature yet.
 
 public class Quine_McCluskey {
 
@@ -502,7 +503,7 @@ public class Quine_McCluskey {
     // Print the final results
     public void printResults() {
         for (int i = 0; i < solution.length; i++) {
-            System.out.println("Solution #" + (i + 1) + ":");
+            System.out.println("Solution " + (i + 1) + ":");
             for (int j = 0; j < solution[i].size(); j++) {
                 System.out.print(toSymbolicExpression(solution[i].get(j)));
                 if (j != solution[i].size() - 1) {
