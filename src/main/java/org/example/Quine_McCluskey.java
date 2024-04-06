@@ -2,9 +2,13 @@ package org.example;
 
 import java.util.*;
 
+// Hello! Please feel free to change variable names! :)
+// Comments are placeholders only for your own comments.
+
 public class Quine_McCluskey {
 
     public static void main(String[] args) {
+        // Prompt user for minterms and don't cares
         Scanner userInput = new Scanner(System.in);
         System.out.print("Minterms (separated by space or comma): ");
         String mintermsInput = userInput.nextLine();
@@ -13,24 +17,29 @@ public class Quine_McCluskey {
         String includeDontCaresInput = userInput.nextLine().toLowerCase();
         String dontCaresInput = "";
 
+        // If user wants to include don't cares, ask for them
         if (includeDontCaresInput.equals("yes")) {
             System.out.print("Don't Cares (separated by space or comma): ");
             dontCaresInput = userInput.nextLine();
         }
 
+        // Initialize Quine_McCluskey object with input
         Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
 
         System.out.println();
+        // Solve and print results
         qm.solve1();
         qm.printResults();
     }
 
 
+    // Represents a term in the boolean function
     private class Term {
         private final String term;
         private int onesCount;
         private final List<Integer> nums;
 
+        // Constructor for initializing term with value and length
         public Term(int value, int length) {
             String binary = Integer.toBinaryString(value);
             StringBuilder temp = new StringBuilder(binary);
@@ -40,6 +49,8 @@ public class Quine_McCluskey {
             this.term = temp.toString();
             nums = new ArrayList<>();
             nums.add(value);
+
+            // Calculate the count of ones in the term
             onesCount = 0;
             for (int i = 0; i < term.length(); i++) {
                 if (term.charAt(i) == '1') {
@@ -48,6 +59,7 @@ public class Quine_McCluskey {
             }
         }
 
+        // Constructor for combining two terms
         public Term(Term term1, Term term2) {
             StringBuilder temp = new StringBuilder();
             for (int i = 0; i < term1.getString().length(); i++) {
@@ -83,6 +95,7 @@ public class Quine_McCluskey {
     }
 
 
+    // Comparator for comparing terms based on ones count
     public static class OnesComparator implements Comparator<Term> {
         @Override
         public int compare(Term t1, Term t2) {
@@ -98,7 +111,9 @@ public class Quine_McCluskey {
     private ArrayList<Term> finalTerms;
     private final int maxBinaryLength;
 
+    // Constrictor for Quine_McCluskey algorithm
     public Quine_McCluskey(String mintermsString, String dontCaresString) {
+        // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
         int[] dontCares = isValid(dontCaresString);
         if (!checkInputs(minterms, dontCares)) {
@@ -108,12 +123,15 @@ public class Quine_McCluskey {
         Arrays.sort(dontCares);
         Arrays.sort(minterms);
 
+        // Determine max binary length
         maxBinaryLength = Integer.toBinaryString(minterms[minterms.length - 1]).length();
 
+        // Initialize lists for minterms, don't cares, and prime implicants
         this.dontCaresList = new ArrayList<>();
         this.mintermsList = new ArrayList<>();
         primeImplicants = new ArrayList<>();
 
+        // Initialize terms array and populate it with terms and don't cares
         Term[] temp = new Term[minterms.length + dontCares.length];
         int index = 0;
         for (int minterm : minterms) {
@@ -130,9 +148,11 @@ public class Quine_McCluskey {
         terms = new Term[index];
         System.arraycopy(temp, 0, terms, 0, index);
 
+        // Sort terms array based on ones count
         Arrays.sort(terms, new OnesComparator());
     }
 
+    // Validate if minterms and don't cares have no duplicates
     boolean checkInputs(int[] minterms, int[] dontCares) {
         List<Integer> temp = new ArrayList<>();
         for (int minterm : minterms) {
@@ -146,6 +166,7 @@ public class Quine_McCluskey {
         return true;
     }
 
+    // Validate and parse input string to array of integers
     private int[] isValid(String input) {
         input = input.replace(",", " ");
         if (input.trim().isEmpty()) {
@@ -171,6 +192,7 @@ public class Quine_McCluskey {
         return temp;
     }
 
+    // Group terms based on ones count
     private ArrayList<Term>[] groupTerms(Term[] termsArray) {
         ArrayList<Term>[] groups = new ArrayList[termsArray[termsArray.length - 1].getOnesCount() + 1];
 
@@ -184,6 +206,7 @@ public class Quine_McCluskey {
         return groups;
     }
 
+    // Perform first step of Quine_McCluskey algorithm
     public void solve1() {
         ArrayList<Term> remainingTerms = new ArrayList<>();
         ArrayList<Term>[] groupedTerms = groupTerms(terms);
@@ -239,6 +262,7 @@ public class Quine_McCluskey {
         solve2();
     }
 
+    // Perform second step of Quine_McCluskey algorithm
     public void solve2() {
         if (!identifyPrimeImplicants()) {
             if (!rowDominance()) {
@@ -256,6 +280,7 @@ public class Quine_McCluskey {
         }
     }
 
+    // Apply Petrick's method for minimization
     void petricksMethod() {
         List<List<String>> temp = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
@@ -300,6 +325,7 @@ public class Quine_McCluskey {
         }
     }
 
+    // Combine terms into a single term
     String mixTerms(String term1, String term2) {
         StringBuilder mixed = new StringBuilder();
         boolean[] added = new boolean[256];
@@ -322,6 +348,7 @@ public class Quine_McCluskey {
         return mixed.toString();
     }
 
+    // Multiply terms according to Petrick's method
     List<String> multiply(ArrayList<String>[] p, int k) {
         if (k >= p.length - 1) {
             return p[k];
@@ -341,6 +368,7 @@ public class Quine_McCluskey {
         return multiply(p, k + 1);
     }
 
+    // Perform column dominance checking
     private boolean columnDominance() {
         boolean flag = false;
         List<List<Integer>> cols = new ArrayList<>();
@@ -371,6 +399,7 @@ public class Quine_McCluskey {
         return flag;
     }
 
+    // Perform row dominance checking
     private boolean rowDominance() {
         boolean flag = false;
         for (int i = 0; i < finalTerms.size() - 1; i++) {
@@ -390,6 +419,7 @@ public class Quine_McCluskey {
         return flag;
     }
 
+    // Identify prime implicants
     private boolean identifyPrimeImplicants() {
         List<List<Integer>> cols = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
@@ -421,6 +451,7 @@ public class Quine_McCluskey {
         return flag;
     }
 
+    // Check if two terms are a valid combination
     boolean isValidCombination(Term term1, Term term2) {
         if (term1.getString().length() != term2.getString().length())
             return false;
@@ -437,6 +468,7 @@ public class Quine_McCluskey {
         return k == 1;
     }
 
+    // Check if one terms contains another
     boolean contains(Term term1, Term term2) {
         if (term1.getNums().size() <= term2.getNums().size()) {
             return false;
@@ -448,6 +480,7 @@ public class Quine_McCluskey {
         return new HashSet<>(a).containsAll(b);
     }
 
+    // Convert boolean term to symbolic expression
     String toSymbolicExpression(String term) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < term.length(); i++) {
@@ -466,6 +499,7 @@ public class Quine_McCluskey {
         return result.toString();
     }
 
+    // Print the final results
     public void printResults() {
         for (int i = 0; i < solution.length; i++) {
             System.out.println("Solution #" + (i + 1) + ":");
