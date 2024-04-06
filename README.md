@@ -16,8 +16,8 @@ Users can implement their own variable names (e.g., 'a', 'b', 'c', 'd' instead o
 ## Expected Deliverables
 1. **Code**
 2. **User Manual**
-   - **Expected Audience:** Tech Illiterate User
-     - **Contents:** Screenshots, UI, any necessary information for the expected audience
+   - **Expected Audience:** Tech-illiterate user
+     - **Contents:** Screenshots, UI, and any necessary information for the expected audience
 3. **Technical Manual**
    - **Point of Comparison:** JavaDoc
-   - Technical and Detailed Explanation of code
+   - Technical and detailed explanation of code
