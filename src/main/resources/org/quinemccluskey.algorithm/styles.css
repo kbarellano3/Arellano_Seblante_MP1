@@ -2,32 +2,52 @@
     -fx-background-color: #F4D58D;
 }
 
-.minterms-box, .solution-box {
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-control-inner-background: #001427;
-    -fx-border-color: transparent;
-    -fx-border-width: 0px;
-    -fx-padding: 10px;
-    -fx-text-fill: #FFFFFF;
+@font-face {
+    font-family: 'Dulce-Boy';
+    src: url("//Fonts//Dulce-Boy.ttf");
 }
 
-.rounded-text-area {
-    -fx-background-radius: 10;
+.title {
+    -fx-font-size: 36pt; /* Increased font size */
+    -fx-font-family: "Dulce-Boy";
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url("//Fonts//Poppins-SemiBold.ttf")
+}
+
+.headers {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Poppins";
+    -fx-font-weight: normal;
+}
+
+.minterms-box, .dontcares-box {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+.solution-box {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
 }
 
 .rounded-button {
-    -fx-background-radius: 10; /* Adjust the radius as needed */
+    -fx-background-radius: 20;
+    -fx-background-color: #FFFFFF;
     -fx-text-fill: #000000;
 }
 
 .rounded-button:hover {
     -fx-background-color: #708D81;
-}
-
-.title {
-    -fx-font-size: 20pt;
-    -fx-font-family: "Roboto";
-    -fx-font-weight: bold;
     -fx-text-fill: #000000;
 }
