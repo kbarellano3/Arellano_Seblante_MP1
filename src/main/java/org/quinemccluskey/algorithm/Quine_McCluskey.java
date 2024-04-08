@@ -9,150 +9,19 @@ import java.util.*;
 
 public class Quine_McCluskey {
 
-    public static void main(String[] args) {
-        // Loop program until user exits
-        while (true) {
-            // Prompt user for minterms and don't cares
-            Scanner userInput = new Scanner(System.in);
-            System.out.print("Minterms (separated by space or comma): ");
-            String mintermsInput = userInput.nextLine();
-
-            String dontCaresInput = "";
-            String continueProgram = "";
-
-            // Check for invalid input
-            while (true) {
-                System.out.print("Do you want to include don't cares? (yes/no): ");
-                String includeDontCaresInput = userInput.nextLine().toLowerCase();
-
-                // Ask user if they want to include don't cares
-                if (includeDontCaresInput.equals("yes")) {
-                    System.out.print("Don't Cares (separated by space or comma): ");
-                    dontCaresInput = userInput.nextLine();
-                    break;
-                }
-                else if (includeDontCaresInput.equals("no")) {
-                    break;
-                }
-                else {
-                    System.out.println("Invalid input. Put 'yes' or 'no'.");
-                }
-            }
-            // Initialize Quine_McCluskey object with MTs and DCs
-            try {
-                Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
-
-                System.out.println();
-                // Solve and print results
-                qm.solve1();
-                qm.printResults();
-            } catch (RuntimeException e) {
-                System.out.println("\nRUNTIME EXCEPTION: Make sure your don't cares are correct\n");
-            }
-
-            System.out.print("Would you like to continue? (yes/no): ");
-            continueProgram = userInput.nextLine().toLowerCase();
-
-            if (continueProgram.equals("yes")) {
-                System.out.println();
-                continue;
-            }
-            else if (continueProgram.equals("no")) {
-                break;
-            }
-            else {
-                System.out.println("Invalid input. Put 'yes' or 'no'");
-                break;
-            }
-        }
-        System.out.println("\nThank you for using our program!");
-    }
-
-
-    // Represents a minterm in the boolean function
-    private class Minterm {
-        private final String minterm;
-        private int onesCount;
-        private final List<Integer> nums;
-
-        // Constructor for initializing minterm with value and length
-        public Minterm(int value, int length) {
-            String binary = Integer.toBinaryString(value);
-            StringBuilder temp = new StringBuilder(binary);
-            while (temp.length() != length) {
-                temp.insert(0, 0);
-            }
-            this.minterm = temp.toString();
-            nums = new ArrayList<>();
-            nums.add(value);
-
-            // Calculate the count of ones in the term
-            onesCount = 0;
-            for (int i = 0; i < minterm.length(); i++) {
-                if (minterm.charAt(i) == '1') {
-                    onesCount++;
-                }
-            }
-        }
-
-        // Constructor for combining two terms
-        public Minterm(Minterm minterm1, Minterm minterm2) {
-            StringBuilder temp = new StringBuilder();
-            for (int i = 0; i < minterm1.getString().length(); i++) {
-                if (minterm1.getString().charAt(i) != minterm2.getString().charAt(i)) {
-                    temp.append("-");
-                } else {
-                    temp.append(minterm1.getString().charAt(i));
-                }
-            }
-            this.minterm = temp.toString();
-            onesCount = 0;
-            for (int i = 0; i < minterm.length(); i++) {
-                if (this.minterm.charAt(i) == '1') {
-                    onesCount++;
-                }
-            }
-            nums = new ArrayList<>();
-            nums.addAll(minterm1.getNums());
-            nums.addAll(minterm2.getNums());
-        }
-
-        String getString() {
-            return minterm;
-        }
-
-        List<Integer> getNums() {
-            return nums;
-        }
-
-        int getOnesCount() {
-            return onesCount;
-        }
-    }
-
-
-    // Comparator for comparing minterms based on ones count
-    public static class OnesComparator implements Comparator<Minterm> {
-        @Override
-        public int compare(Minterm t1, Minterm t2) {
-            return t1.getOnesCount() - t2.getOnesCount();
-        }
-    }
-
     private final Minterm[] minterms;
     private final ArrayList<Integer> mintermsList;
+    private ArrayList<Minterm> finalMinterms;
     private final ArrayList<Integer> dontCaresList;
     private ArrayList<String>[] solution;
     private final ArrayList<String> primeImplicants;
-    private ArrayList<Minterm> finalMinterms;
-    private final int maxBinaryLength;
 
     // Constructor for Quine_McCluskey algorithm
     public Quine_McCluskey(String mintermsString, String dontCaresString) {
         // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
         int[] dontCares = isValid(dontCaresString);
-        if (!checkInputs(minterms, dontCares)) {
+        if (!Helper.checkInputs(minterms, dontCares)) {
             throw new RuntimeException("Invalid input");
         }
 
@@ -160,7 +29,7 @@ public class Quine_McCluskey {
         Arrays.sort(minterms);
 
         // Determine max binary length
-        maxBinaryLength = Integer.toBinaryString(minterms[minterms.length - 1]).length();
+        var maxBinaryLength = Integer.toBinaryString(minterms[minterms.length - 1]).length();
 
         // Initialize lists for minterms, don't cares, and prime implicants
         this.dontCaresList = new ArrayList<>();
@@ -186,20 +55,6 @@ public class Quine_McCluskey {
 
         // Sort terms array based on ones count
         Arrays.sort(this.minterms, new OnesComparator());
-    }
-
-    // Validate if minterms and don't cares have no duplicates
-    boolean checkInputs(int[] minterms, int[] dontCares) {
-        List<Integer> temp = new ArrayList<>();
-        for (int minterm : minterms) {
-            temp.add(minterm);
-        }
-        for (int dontCare : dontCares) {
-            if (temp.contains(dontCare)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     // Validate and parse input string to array of integers
@@ -262,7 +117,7 @@ public class Quine_McCluskey {
 
                 for (int j = 0; j < groupedTerms[i].size(); j++) {
                     for (int k = 0; k < groupedTerms[i + 1].size(); k++) {
-                        if (isValidCombination(groupedTerms[i].get(j), groupedTerms[i + 1].get(k))) {
+                        if (Helper.isValidCombination(groupedTerms[i].get(j), groupedTerms[i + 1].get(k))) {
 
                             combinedTerms.add(groupedTerms[i].get(j).getString());
                             combinedTerms.add(groupedTerms[i + 1].get(k).getString());
@@ -361,29 +216,6 @@ public class Quine_McCluskey {
         }
     }
 
-    // Combine minterms and don't cares into a single binary string
-    String mixTerms(String minterm1, String minterm2) {
-        StringBuilder mixed = new StringBuilder();
-        boolean[] added = new boolean[256];
-
-        for (char c : minterm1.toCharArray()) {
-            char upperCaseC = Character.toUpperCase(c);
-            if (c != '-' && !added[upperCaseC]) {
-                mixed.append(c);
-                added[upperCaseC] = true;
-            }
-        }
-
-        for (char c : minterm2.toCharArray()) {
-            char upperCaseC = Character.toUpperCase(c);
-            if (c != '-' && !added[upperCaseC]) {
-                mixed.append(c);
-                added[upperCaseC] = true;
-            }
-        }
-        return mixed.toString();
-    }
-
     // Multiply terms according to Petrick's method
     List<String> multiply(ArrayList<String>[] p, int k) {
         if (k >= p.length - 1) {
@@ -393,7 +225,7 @@ public class Quine_McCluskey {
         ArrayList<String> resultList = new ArrayList<>();
         for (String firstListTerm : p[k]) {
             for (String secondListTerm : p[k + 1]) {
-                String mixed = mixTerms(firstListTerm, secondListTerm);
+                String mixed = Helper.mixTerms(firstListTerm, secondListTerm);
                 if (!resultList.contains(mixed)) {
                     resultList.add(mixed);
                 }
@@ -487,23 +319,6 @@ public class Quine_McCluskey {
         return flag;
     }
 
-    // Check if two minterms are a valid combination
-    boolean isValidCombination(Minterm minterm1, Minterm minterm2) {
-        if (minterm1.getString().length() != minterm2.getString().length())
-            return false;
-
-        int k = 0;
-        for (int i = 0; i < minterm1.getString().length(); i++) {
-            if (minterm1.getString().charAt(i) == '-' && minterm2.getString().charAt(i) != '-')
-                return false;
-            else if (minterm1.getString().charAt(i) != '-' && minterm2.getString().charAt(i) == '-')
-                return false;
-            else if (minterm1.getString().charAt(i) != minterm2.getString().charAt(i))
-                k++;
-        }
-        return k == 1;
-    }
-
     // Check if one minterm contains another
     boolean contains(Minterm term1, Minterm term2) {
         if (term1.getNums().size() <= term2.getNums().size()) {
@@ -516,46 +331,13 @@ public class Quine_McCluskey {
         return new HashSet<>(a).containsAll(b);
     }
 
-    // Convert boolean term to symbolic expression
-    String toSymbolicExpression(String term) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < term.length(); i++) {
-            char c = term.charAt(i);
-            if (c == '-') {
-                continue;
-            } else if (c == '1') {
-                result.append((char) ('A' + i));
-            } else if (c == '0') {
-                result.append((char) ('A' + i)).append('\'');
-            }
-        }
-        if (result.isEmpty()) {
-            result.append("1");
-        }
-        return result.toString();
-    }
-
-    // Print the final result/s
-    public void printResults() {
-        for (int i = 0; i < solution.length; i++) {
-            System.out.println("Solution " + (i + 1) + ":");
-            for (int j = 0; j < solution[i].size(); j++) {
-                System.out.print(toSymbolicExpression(solution[i].get(j)));
-                if (j != solution[i].size() - 1) {
-                    System.out.print(" + ");
-                }
-            }
-            System.out.println("\n");
-        }
-    }
-
     // Method to get results as a string
     public String getResultsAsString() {
         StringBuilder resultBuilder = new StringBuilder();
         for (int i = 0; i < solution.length; i++) {
             resultBuilder.append("Solution ").append(i + 1).append(":\n");
             for (int j = 0; j < solution[i].size(); j++) {
-                resultBuilder.append(toSymbolicExpression(solution[i].get(j)));
+                resultBuilder.append(Helper.toSymbolicExpression(solution[i].get(j)));
                 if (j != solution[i].size() - 1) {
                     resultBuilder.append(" + ");
                 }
@@ -564,5 +346,77 @@ public class Quine_McCluskey {
         }
         return resultBuilder.toString();
     }
-
 }
+
+//    public static void main(String[] args) {
+//        // Loop program until user exits
+//        while (true) {
+//            // Prompt user for minterms and don't cares
+//            Scanner userInput = new Scanner(System.in);
+//            System.out.print("Minterms (separated by space or comma): ");
+//            String mintermsInput = userInput.nextLine();
+//
+//            String dontCaresInput = "";
+//            String continueProgram = "";
+//
+//            // Check for invalid input
+//            while (true) {
+//                System.out.print("Do you want to include don't cares? (yes/no): ");
+//                String includeDontCaresInput = userInput.nextLine().toLowerCase();
+//
+//                // Ask user if they want to include don't cares
+//                if (includeDontCaresInput.equals("yes")) {
+//                    System.out.print("Don't Cares (separated by space or comma): ");
+//                    dontCaresInput = userInput.nextLine();
+//                    break;
+//                }
+//                else if (includeDontCaresInput.equals("no")) {
+//                    break;
+//                }
+//                else {
+//                    System.out.println("Invalid input. Put 'yes' or 'no'.");
+//                }
+//            }
+//            // Initialize Quine_McCluskey object with MTs and DCs
+//            try {
+//                Quine_McCluskey qm = new Quine_McCluskey(mintermsInput, dontCaresInput);
+//
+//                System.out.println();
+//                // Solve and print results
+//                qm.solve1();
+//                qm.printResults();
+//            } catch (RuntimeException e) {
+//                System.out.println("\nRUNTIME EXCEPTION: Make sure your don't cares are correct\n");
+//            }
+//
+//            System.out.print("Would you like to continue? (yes/no): ");
+//            continueProgram = userInput.nextLine().toLowerCase();
+//
+//            if (continueProgram.equals("yes")) {
+//                System.out.println();
+//                continue;
+//            }
+//            else if (continueProgram.equals("no")) {
+//                break;
+//            }
+//            else {
+//                System.out.println("Invalid input. Put 'yes' or 'no'");
+//                break;
+//            }
+//        }
+//        System.out.println("\nThank you for using our program!");
+//    }
+
+//    // Print the final result/s
+//    public void printResults() {
+//        for (int i = 0; i < solution.length; i++) {
+//            System.out.println("Solution " + (i + 1) + ":");
+//            for (int j = 0; j < solution[i].size(); j++) {
+//                System.out.print(toSymbolicExpression(solution[i].get(j)));
+//                if (j != solution[i].size() - 1) {
+//                    System.out.print(" + ");
+//                }
+//            }
+//            System.out.println("\n");
+//        }
+//    }
