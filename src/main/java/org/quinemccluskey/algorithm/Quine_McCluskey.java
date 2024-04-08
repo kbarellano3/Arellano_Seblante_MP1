@@ -548,5 +548,21 @@ public class Quine_McCluskey {
             System.out.println("\n");
         }
     }
-    
+
+    // Method to get results as a string
+    public String getResultsAsString() {
+        StringBuilder resultBuilder = new StringBuilder();
+        for (int i = 0; i < solution.length; i++) {
+            resultBuilder.append("Solution ").append(i + 1).append(":\n");
+            for (int j = 0; j < solution[i].size(); j++) {
+                resultBuilder.append(toSymbolicExpression(solution[i].get(j)));
+                if (j != solution[i].size() - 1) {
+                    resultBuilder.append(" + ");
+                }
+            }
+            resultBuilder.append("\n\n");
+        }
+        return resultBuilder.toString();
+    }
+
 }
