@@ -1,0 +1,33 @@
+#root {
+    -fx-background-color: #F4D58D;
+}
+
+.minterms-box, .solution-box {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-control-inner-background: #001427;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
+    -fx-padding: 10px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.rounded-text-area {
+    -fx-background-radius: 10;
+}
+
+.rounded-button {
+    -fx-background-radius: 10; /* Adjust the radius as needed */
+    -fx-text-fill: #000000;
+}
+
+.rounded-button:hover {
+    -fx-background-color: #708D81;
+}
+
+.title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Roboto";
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
