@@ -56,23 +56,4 @@ public class Helper {
         }
         return k == 1;
     }
-
-    // Convert boolean term to symbolic expression
-    public static String toSymbolicExpression(String term) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < term.length(); i++) {
-            char c = term.charAt(i);
-            if (c == '-') {
-                continue;
-            } else if (c == '1') {
-                result.append((char) ('A' + i));
-            } else if (c == '0') {
-                result.append((char) ('A' + i)).append('\'');
-            }
-        }
-        if (result.isEmpty()) {
-            result.append("1");
-        }
-        return result.toString();
-    }
 }

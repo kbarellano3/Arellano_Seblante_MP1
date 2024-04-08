@@ -15,9 +15,11 @@ public class Quine_McCluskey {
     private final ArrayList<Integer> dontCaresList;
     private ArrayList<String>[] solution;
     private final ArrayList<String> primeImplicants;
+    public final String startChar;
 
     // Constructor for Quine_McCluskey algorithm
-    public Quine_McCluskey(String mintermsString, String dontCaresString) {
+    public Quine_McCluskey(String mintermsString, String dontCaresString, String startChar) {
+        this.startChar = startChar;
         // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
         int[] dontCares = isValid(dontCaresString);
@@ -171,14 +173,45 @@ public class Quine_McCluskey {
         }
     }
 
+    String toSymbolicExpression(String term) {
+        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < term.length(); i++) {
+            char c = term.charAt(i);
+            if (c == '-') {
+                continue;
+            } else if (c == '1' || c == '0') {
+                char var;
+                if (Character.isUpperCase(start)) {
+                    var = (char) ((start - 'A' + i) % 26 + 'A');
+                } else {
+                    var = (char) ((start - 'a' + i) % 26 + 'a');
+                }
+                result.append(var);
+                if (c == '0') {
+                    result.append('\'');
+                }
+            }
+        }
+        if (result.isEmpty()) {
+            result.append("1");
+        }
+        return result.toString();
+    }
+
+
     // Petrick's method; Used to find essential and additional PIs
     void petricksMethod() {
+
+        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+
         List<List<String>> temp = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
             temp.add(new ArrayList<>());
             for (int j = 0; j < finalMinterms.size(); j++) {
                 if (finalMinterms.get(j).getNums().contains(mintermsList.get(i))) {
-                    char t = (char) ('a' + j);
+                    char t = (char) (start + j);
                     temp.get(i).add(t + "");
                 }
             }
@@ -206,7 +239,7 @@ public class Quine_McCluskey {
             if (c.length() == min) {
                 solution[k] = new ArrayList<>();
                 for (int i = 0; i < c.length(); i++) {
-                    solution[k].add(finalMinterms.get((int) c.charAt(i) - 'a').getString());
+                    solution[k].add(finalMinterms.get((int) c.charAt(i) - start).getString());
                 }
                 for (String primeTerm : primeImplicants) {
                     solution[k].add(primeTerm);
@@ -337,7 +370,7 @@ public class Quine_McCluskey {
         for (int i = 0; i < solution.length; i++) {
             resultBuilder.append("Solution ").append(i + 1).append(":\n");
             for (int j = 0; j < solution[i].size(); j++) {
-                resultBuilder.append(Helper.toSymbolicExpression(solution[i].get(j)));
+                resultBuilder.append(toSymbolicExpression(solution[i].get(j)));
                 if (j != solution[i].size() - 1) {
                     resultBuilder.append(" + ");
                 }
