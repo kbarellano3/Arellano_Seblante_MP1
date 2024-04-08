@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quinemccluskey.algorithm.MainController">
-    <TextArea fx:id="mtTextArea" promptText="Enter minterms" />
-   <TextArea fx:id="dcTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Enter Don't Cares" />
-    <Button onAction="#solve" text="Solve" />
-    <TextArea fx:id="outputTextArea" editable="false" />
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+<VBox id="root" fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quinemccluskey.algorithm.MainController" spacing="20.0" alignment="CENTER">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+    <children>
+        <Label text="Quine-McCluskey Algorithm" styleClass="title"/>
+        <TextArea fx:id="mtTextArea" promptText="Enter Minterms" prefWidth="300.0" prefHeight="50.0" wrapText="true" styleClass="rounded-text-area minterms-box"/>
+        <TextArea fx:id="dcTextArea" promptText="Enter Don't Cares" prefWidth="300.0" prefHeight="50.0" wrapText="true" styleClass="rounded-text-area minterms-box"/>
+        <Button fx:id="solveButton" onAction="#solve" text="Solve" prefWidth="80.0" styleClass="rounded-button"/>
+        <TextArea fx:id="outputTextArea" editable="false" prefWidth="300.0" prefHeight="150.0" wrapText="true" styleClass="rounded-text-area solution-box"/>
+    </children>
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+    </padding>
 </VBox>
