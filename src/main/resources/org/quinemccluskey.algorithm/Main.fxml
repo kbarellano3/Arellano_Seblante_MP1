@@ -17,31 +17,49 @@
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints hgrow="NEVER" />
+        <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="50.0" percentHeight="20" vgrow="ALWAYS" />
-        <RowConstraints percentHeight="30" vgrow="NEVER" />
-        <RowConstraints percentHeight="30" vgrow="NEVER" />
-        <RowConstraints percentHeight="10" vgrow="NEVER" />
-        <RowConstraints percentHeight="40" vgrow="ALWAYS" />
+        <RowConstraints minHeight="40.0" percentHeight="20.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <RowConstraints percentHeight="30.0" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-        <Label styleClass="headers" text="Minterms:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="CENTER"></Label>
-        <Label styleClass="headers" text="Don't Cares:" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="CENTER"></Label>
-        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter Minterms" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Minterms:" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Don't Cares:" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter Minterms" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
             <font>
                 <Font size="14.0" />
-            </font></TextArea>
-        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter Don't Cares" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            </font>
+        </TextArea>
+        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter Don't Cares" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
             <font>
                 <Font size="14.0" />
-            </font></TextArea>
-        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            </font>
+        </TextArea>
+        <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter Start Variable" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <font>
                 <Font size="14.0" />
-            </font></TextArea>
+            </font>
+        </TextArea>
+        <Label styleClass="headers" text="End Variable:" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <TextArea fx:id="endVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter End Variable" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
