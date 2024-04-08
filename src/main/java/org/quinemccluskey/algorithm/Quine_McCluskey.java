@@ -30,9 +30,11 @@ public class Quine_McCluskey {
                     System.out.print("Don't Cares (separated by space or comma): ");
                     dontCaresInput = userInput.nextLine();
                     break;
-                } else if (includeDontCaresInput.equals("no")) {
+                }
+                else if (includeDontCaresInput.equals("no")) {
                     break;
-                } else {
+                }
+                else {
                     System.out.println("Invalid input. Put 'yes' or 'no'.");
                 }
             }
@@ -54,9 +56,11 @@ public class Quine_McCluskey {
             if (continueProgram.equals("yes")) {
                 System.out.println();
                 continue;
-            } else if (continueProgram.equals("no")) {
+            }
+            else if (continueProgram.equals("no")) {
                 break;
-            } else {
+            }
+            else {
                 System.out.println("Invalid input. Put 'yes' or 'no'");
                 break;
             }
@@ -202,7 +206,7 @@ public class Quine_McCluskey {
     private int[] isValid(String input) {
         input = input.replace(",", " ");
         if (input.trim().isEmpty()) {
-            return new int[]{};
+            return new int[] {};
         }
         String[] array = input.trim().split(" +");
         int[] temp = new int[array.length];
@@ -544,22 +548,5 @@ public class Quine_McCluskey {
             System.out.println("\n");
         }
     }
-
-    // Method to get results as a string
-    public String getResultsAsString() {
-        StringBuilder resultBuilder = new StringBuilder();
-        for (int i = 0; i < solution.length; i++) {
-            resultBuilder.append("Solution ").append(i + 1).append(":\n");
-            for (int j = 0; j < solution[i].size(); j++) {
-                resultBuilder.append(toSymbolicExpression(solution[i].get(j)));
-                if (j != solution[i].size() - 1) {
-                    resultBuilder.append(" + ");
-                }
-            }
-            resultBuilder.append("\n\n");
-        }
-        return resultBuilder.toString();
-    }
-
+    
 }
-
