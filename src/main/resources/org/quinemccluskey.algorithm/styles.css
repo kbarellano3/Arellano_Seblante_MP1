@@ -8,7 +8,7 @@
 }
 
 .title {
-    -fx-font-size: 36pt; /* Increased font size */
+    -fx-font-size: 36pt;
     -fx-font-family: "Dulce-Boy";
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
@@ -22,7 +22,7 @@
 .headers {
     -fx-font-size: 14pt;
     -fx-font-family: "Poppins";
-    -fx-font-weight: normal;
+    -fx-font-weight: 700;
 }
 
 .minterms-box, .dontcares-box {
