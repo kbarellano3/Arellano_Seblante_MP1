@@ -18,8 +18,24 @@ public class MainController {
         String input1 = mtTextArea.getText();
         String input2 = dcTextArea.getText();
         // Parse input and perform calculations
-        Quine_McCluskey qm = new Quine_McCluskey(input1, input2);
-        qm.solve1();
-        outputTextArea.setText(qm.getResultsAsString());
+        try {
+            Quine_McCluskey qm = new Quine_McCluskey(input1, input2);
+            qm.solve1();
+            outputTextArea.setText(qm.getResultsAsString());
+        } catch (RuntimeException e) {
+            if (isNumber(input1) && isNumber(input2)) {
+                outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
+            }
+            else outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
+        }
     }
+    public static boolean isNumber(String x) {
+        try {
+            Integer.parseInt(x);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 }
