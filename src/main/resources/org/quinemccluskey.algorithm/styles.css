@@ -12,7 +12,7 @@
 }
 
 .title {
-    -fx-font-size: 36pt;
+    -fx-font-size: 42pt;
     -fx-font-family: "Dulce-Boy";
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
@@ -29,7 +29,13 @@
     -fx-font-weight: 700;
 }
 
-.minterms-box, .dontcares-box {
+.notes {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Poppins";
+    -fx-font-weight: normal;
+}
+
+.minterms-box, .dontcares-box, .startvariable-box {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 10px;
     -fx-border-color: transparent;
