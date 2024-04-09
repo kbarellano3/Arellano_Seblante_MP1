@@ -16,8 +16,8 @@
     </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="NEVER" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="358.0" minWidth="146.0" prefWidth="198.0" />
+        <ColumnConstraints hgrow="NEVER" maxWidth="246.0" minWidth="6.0" prefWidth="197.0" />
         <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>

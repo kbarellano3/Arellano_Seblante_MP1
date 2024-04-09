@@ -34,15 +34,10 @@ public class MainController {
 //                outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
 //            }
 //            else outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
-            if (input1.isEmpty()) {
-                outputTextArea.setText("You did not input any minterms.");
-            } else if (input1.isEmpty() && input2.isEmpty()) {
-                outputTextArea.setText("You did not input any minterms.");
-            } else if (!checkIfNumber(input1) && !checkIfNumber(input2)) {
-                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
-            } else if (!checkIfNumber(input1) || !checkIfNumber(input2)) {
-                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
-            } else outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
+            if (input1.isEmpty()) outputTextArea.setText("You did not input any minterms.");
+            else if (!checkIfNumber(input1) && !checkIfNumber(input2)) outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
+            else if (!checkIfNumber(input1) || !checkIfNumber(input2)) outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
+            else outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
         }
     }
     public static boolean isNumber(String x) {
