@@ -43,7 +43,7 @@
             </font>
         </TextArea>
         <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter Start Variable" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter Start Variable" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
             <font>
                 <Font size="14.0" />
             </font>
