@@ -1,5 +1,8 @@
 #root {
     -fx-background-color: #F4D58D;
+    -fx-background-image: url("/gradientBackground.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
 }
 
 @font-face {
