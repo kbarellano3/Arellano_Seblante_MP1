@@ -3,6 +3,7 @@
     -fx-background-image: url("/gradientBackground.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
+    -fx-padding: 50;
 }
 
 @font-face {
