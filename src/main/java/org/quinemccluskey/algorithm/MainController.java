@@ -27,7 +27,7 @@ public class MainController {
             qm.solve1();
             outputTextArea.setText(qm.getResultsAsString());
             if (isNumber(input3)) {
-                outputTextArea.setText("INVALID INPUT: Use letters only.");
+                outputTextArea.setText("INVALID INPUT: Use letters only for your starting variable.");
             }
         } catch (RuntimeException e) {
 //            if (isNumber(input1) && isNumber(input2)) {

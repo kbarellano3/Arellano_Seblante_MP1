@@ -8,12 +8,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/org/quinemccluskey.algorithm/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/quinemccluskey.algorithm/Main.fxml")));
 
         // Set the initial width and height to the maximum available width and height
         Screen screen = Screen.getPrimary();
