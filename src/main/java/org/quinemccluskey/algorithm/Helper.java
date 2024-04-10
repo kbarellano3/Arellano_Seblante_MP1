@@ -3,8 +3,22 @@ package org.quinemccluskey.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that contains all the helper methods of the QMA.
+ */
 public class Helper {
-    // Validate if minterms and don't cares have no duplicates
+
+    /**
+     * Validates if minterms and don't cares have no duplicates.
+     *
+     * <p>
+     *     This method checks whether the arrays of minterms and don't cares contain any duplicate values.
+     * </p>
+     *
+     * @param minterms Integer array of minterms.
+     * @param dontCares Integer array of don't cares.
+     * @return Returns true if both arrays have no duplicates, false otherwise.
+     */
     public static boolean checkInputs(int[] minterms, int[] dontCares) {
         List<Integer> temp = new ArrayList<>();
         for (int minterm : minterms) {
@@ -17,7 +31,19 @@ public class Helper {
         }
         return true;
     }
-    // Combine minterms and don't cares into a single binary string
+
+    /**
+     * Combines minterms and don't cares into a single binary string.
+     *
+     * <p>
+     *     This method combines two binary strings representing minterms or don't cares into a single binary string
+     *     by appending characters from each string while avoiding duplicates.
+     * </p>
+     *
+     * @param minterm1 The first binary string representing a minterm or don't care.
+     * @param minterm2 The second binary string representing a minterm or don't care.
+     * @return Returns the combined binary string with no duplicate characters.
+     */
     public static String mixTerms(String minterm1, String minterm2) {
         StringBuilder mixed = new StringBuilder();
         boolean[] added = new boolean[256];
@@ -40,7 +66,19 @@ public class Helper {
         return mixed.toString();
     }
 
-    // Check if two minterms are a valid combination
+
+    /**
+     * Checks if two minterms form a valid combination.
+     *
+     * <p>
+     *     This method verifies whether two minterms can be combined into a new minterm by checking if they differ in
+     *     only one bit position.
+     * </p>
+     *
+     * @param minterm1 The first minterm object.
+     * @param minterm2 The second minterm object.
+     * @return Returns true if the minterms can be combined, false otherwise.
+     */
     public static boolean isValidCombination(Minterm minterm1, Minterm minterm2) {
         if (minterm1.getString().length() != minterm2.getString().length())
             return false;

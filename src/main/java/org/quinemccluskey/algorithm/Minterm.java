@@ -21,11 +21,11 @@ public class Minterm {
      *
      * <p>
      *     This method/constructor is responsible for converting each minterm integer into a binary string. This would
-     *     then be modified with leading zeros depending on the specified length of the maximum minterm. Additionally,
-     *     the number of ones in the minterm is counted to group them properly—a crucial step in the QMA.
+     *     then be modified with leading zeros depending on the specified length of the maximum minterm. Lastly,
+     *     the number of ones in the minterm is counted to group them properly.
      * </p>
-     * @param value The integer value of the minterm being constructed.
-     * @param length The length of the minterm that serves as the basis for leading zeros.
+     * @param value Integer value of the minterm being constructed.
+     * @param length Integer length of the minterm that serves as the basis for leading zeros.
      */
     public Minterm(int value, int length) {
         String binary = Integer.toBinaryString(value);
@@ -54,8 +54,8 @@ public class Minterm {
      *     The program does so by adding a "-" when two bits are different and updating their ones count.
      * </p>
      *
-     * @param minterm1 The first minterm to be compared.
-     * @param minterm2 The second minterm to be compared.
+     * @param minterm1 First minterm object to be compared.
+     * @param minterm2 Second minterm object to be compared.
      */
     // Constructor for combining two terms
     public Minterm(Minterm minterm1, Minterm minterm2) {
