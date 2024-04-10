@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,6 +17,7 @@
         <URL value="@styles.css" />
     </stylesheets>
     <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="NEVER" />
@@ -31,33 +34,45 @@
         <RowConstraints percentHeight="30.0" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-        <Label styleClass="headers" text="Minterms:" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-        <Label styleClass="headers" text="Don't Cares:" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+        <Label styleClass="headers" text="Minterms:" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Don't Cares:" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1">
             <font>
                 <Font size="14.0" />
             </font>
         </TextArea>
-        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2">
             <font>
                 <Font size="14.0" />
             </font>
         </TextArea>
-        <Label styleClass="notes" text="Note: Don't cares are optional" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-        <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter start variable" styleClass="startvariable-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
+        <Label styleClass="notes" text="Note: Don't cares are optional" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter start variable" styleClass="startvariable-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
             <font>
                 <Font size="14.0" />
             </font>
         </TextArea>
-        <Label styleClass="notes" text="Note: You can use your own variable names by indicating your starting variable (e.g. enter 'w' and get results with the variables 'w', 'x', 'y', 'z' instead of 'a', 'b', 'c', 'd')" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="7">
+        <Label styleClass="notes" text="Note: You can use your own variable names by indicating your starting variable (e.g. enter 'w' and get results with the variables 'w', 'x', 'y', 'z' instead of 'a', 'b', 'c', 'd')" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7">
             <font>
                 <Font size="14.0" />
             </font>
         </TextArea>
+      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <image>
+            <Image url="finn.png" />
+         </image></ImageView>
+      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+         <image>
+            <Image url="jake.png" />
+         </image></ImageView>
+      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+         <image>
+            <Image url="bmo.png" />
+         </image></ImageView>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
