@@ -5,11 +5,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <GridPane id="root" fx:id="root" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quinemccluskey.algorithm.MainController">
@@ -17,64 +19,124 @@
         <URL value="@styles.css" />
     </stylesheets>
     <columnConstraints>
-      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="NEVER" />
+        <!--index 0-->
+        <ColumnConstraints hgrow="NEVER" percentWidth="7.0" />
+        <!--index 1-->
+        <ColumnConstraints hgrow="NEVER" maxWidth="372.0" minWidth="10.0" percentWidth="18.0" prefWidth="10.0" />
+        <!--index 2-->
+        <ColumnConstraints hgrow="NEVER" maxWidth="1165.0" minWidth="161.0" prefWidth="1092.0" />
+        <!--index 3-->
+        <ColumnConstraints hgrow="NEVER" maxWidth="885.0" minWidth="161.0" percentWidth="17.0" prefWidth="514.0" />
+        <!--index 4-->
+        <ColumnConstraints hgrow="NEVER" maxWidth="258.0" minWidth="37.0" percentWidth="5.0" prefWidth="84.0" />
+        <!--index 5-->
+        <ColumnConstraints hgrow="NEVER" percentWidth="10.0" />
     </columnConstraints>
     <rowConstraints>
+        <!--index 0-->
+        <RowConstraints percentHeight="3.0" vgrow="NEVER" />
+        <!--index 1-->
         <RowConstraints minHeight="40.0" percentHeight="20.0" vgrow="NEVER" />
-        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
-        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <!--index 2-->
+        <RowConstraints percentHeight="12.0" vgrow="NEVER" />
+        <!--index 3-->
+        <RowConstraints percentHeight="12.0" vgrow="NEVER" />
+        <!--index 4-->
         <RowConstraints percentHeight="3.0" vgrow="NEVER" />
-        <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <!--index 5-->
+        <RowConstraints percentHeight="12.0" vgrow="NEVER" />
+        <!--index 6-->
         <RowConstraints percentHeight="3.0" vgrow="NEVER" />
+        <!--index 7-->
         <RowConstraints percentHeight="10.0" vgrow="NEVER" />
+        <!--index 8-->
         <RowConstraints percentHeight="30.0" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-        <Label styleClass="headers" text="Minterms:" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-        <Label styleClass="headers" text="Don't Cares:" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <!--Displays number of successful runs-->
+        <Label fx:id="numSuccessfulRunsLabel" styleClass="numSuccessfulRuns-label" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+
+        <!--Displays current time-->
+        <Label fx:id="timeLabel" styleClass="time-label" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+
+        <!--Displays program name-->
+        <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <effect>
+             <DropShadow height="77.01" radius="38.6" width="79.39">
+                 <color>
+                     <Color red="0.14132553339004517" green="0.25438597798347473" blue="0.18278102576732635" />
+                 </color>
+             </DropShadow>
+         </effect></Label>
+
+        <!--Input labels-->
+        <Label styleClass="headers" text="Minterms:" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Don't Cares:" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+
+        <!--Text areas for user input-->
+        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="2">
+        </TextArea>
+        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="3">
+        </TextArea>
+        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter start variable" styleClass="startvariable-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="5">
+        </TextArea>
+
+        <!--Notes-->
+        <Label styleClass="notes" text="Note: Don't cares are optional" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <Label styleClass="notes" text="Note: You can use your own variable names by indicating your starting variable (e.g. enter 'w' and get results with the variables 'w', 'x', 'y', 'z')" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+
+        <!--Solve button-->
+        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+
+        <!--Text area for program output-->
+        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="8">
             <font>
                 <Font size="14.0" />
             </font>
         </TextArea>
-        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextArea>
-        <Label styleClass="notes" text="Note: Don't cares are optional" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-        <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-        <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter start variable" styleClass="startvariable-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextArea>
-        <Label styleClass="notes" text="Note: You can use your own variable names by indicating your starting variable (e.g. enter 'w' and get results with the variables 'w', 'x', 'y', 'z' instead of 'a', 'b', 'c', 'd')" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-        <Button fx:id="solveButton" onAction="#solve" prefHeight="31.0" prefWidth="135.0" styleClass="rounded-button" text="Solve" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-        <TextArea fx:id="outputTextArea" editable="false" prefHeight="100.0" prefWidth="300.0" styleClass="solution-box" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </TextArea>
-      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-         <image>
-            <Image url="finn.png" />
-         </image></ImageView>
-      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-         <image>
-            <Image url="jake.png" />
-         </image></ImageView>
-      <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="4">
-         <image>
-            <Image url="bmo.png" />
-         </image></ImageView>
+
+        <!--Assets-->
+        <ImageView fx:id="tabIconsImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+            <image>
+                <Image url="@../../tabIcons.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="guntherImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+            <image>
+                <Image url="@../../gunther.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="ricardioImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+            <image>
+                <Image url="@../../ricardio.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="finnImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <image>
+                <Image url="@../../finn.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="jakeImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <image>
+                <Image url="@../../jake.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="bmoImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <image>
+                <Image url="@../../bmo.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="iceKingImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+            <image>
+                <Image url="@../../iceKing.png" />
+            </image>
+        </ImageView>
     </children>
+
+    <!--Website margins-->
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+
 </GridPane>

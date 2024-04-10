@@ -1,7 +1,17 @@
 package org.quinemccluskey.algorithm;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import java.time.LocalTime;
 
 /**
  * Controller class of the Main FXML which enables the application to function.
@@ -27,6 +37,24 @@ public class MainController {
     @FXML
     private TextArea outputTextArea;
 
+    @FXML
+    private ImageView finnImage;
+
+    @FXML
+    private ImageView jakeImage;
+
+    @FXML
+    private ImageView bmoImage;
+
+    @FXML
+    private ImageView iceKingImage;
+
+    @FXML
+    private Label numSuccessfulRunsLabel;
+
+    @FXML
+    private Label timeLabel;
+
     /**
      * Method called when the user clicks the 'solve' button.
      *
@@ -35,6 +63,8 @@ public class MainController {
      *     then outputs the proper boolean expression/error message onto another text field.
      * </p>
      */
+
+    private int numSuccessfulRuns = 0;
 
     public void solve() {
         String input1 = mtTextArea.getText();
@@ -47,6 +77,9 @@ public class MainController {
             outputTextArea.setText(qm.getResultsAsString());
             if (isNumber(input3)) {
                 outputTextArea.setText("INVALID INPUT: Use letters only for your starting variable.");
+            } else {
+                numSuccessfulRuns++;
+                updateNumSuccessfulRunsLabel();
             }
         } catch (RuntimeException e) {
             if (input1.isEmpty()) {
@@ -57,6 +90,14 @@ public class MainController {
                 outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
             } else outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
         }
+    }
+
+    private void updateNumSuccessfulRunsLabel() {
+        numSuccessfulRunsLabel.setText("No. of Runs: " + numSuccessfulRuns);
+    }
+
+    public void reset() {
+        numSuccessfulRuns = 0;
     }
 
     /**
@@ -99,6 +140,55 @@ public class MainController {
             }
         }
         return true;
+    }
+
+    public void initialize() {
+        // Create a translate transition for the Finn image
+        TranslateTransition finnTransition = new TranslateTransition(Duration.seconds(1), finnImage);
+        finnTransition.setByY(-20); // Move the image up by 20 pixels
+        finnTransition.setAutoReverse(true); // Move the image back down after reaching the top
+        finnTransition.setCycleCount(TranslateTransition.INDEFINITE); // Repeat the transition indefinitely
+        finnTransition.play();
+
+        // Create a translate transition for the Jake image
+        TranslateTransition jakeTransition = new TranslateTransition(Duration.seconds(1), jakeImage);
+        jakeTransition.setByY(-20);
+        jakeTransition.setAutoReverse(true);
+        jakeTransition.setCycleCount(TranslateTransition.INDEFINITE);
+        jakeTransition.play();
+
+        // Create a translate transition for the BMO image
+        TranslateTransition bmoTransition = new TranslateTransition(Duration.seconds(1), bmoImage);
+        bmoTransition.setByY(-20);
+        bmoTransition.setAutoReverse(true);
+        bmoTransition.setCycleCount(TranslateTransition.INDEFINITE);
+        bmoTransition.play();
+
+        // Create a translate transition for the Ice King image
+        TranslateTransition iceKingTransition = new TranslateTransition(Duration.seconds(1), iceKingImage);
+        iceKingTransition.setByY(-20);
+        iceKingTransition.setAutoReverse(true);
+        iceKingTransition.setCycleCount(TranslateTransition.INDEFINITE);
+        iceKingTransition.play();
+
+        numSuccessfulRunsLabel.setText("No. of Runs: 0");
+
+        updateNumSuccessfulRunsLabel();
+
+        // Set the initial time label text
+        timeLabel.setText(getCurrentTime());
+
+        // Create a Timeline animation that updates the time label every second
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeLabel.setText(getCurrentTime());
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private String getCurrentTime() {
+        LocalTime time = LocalTime.now();
+        return String.format("%02d:%02d:%02d", time.getHour(), time.getMinute(), time.getSecond());
     }
 
 }
