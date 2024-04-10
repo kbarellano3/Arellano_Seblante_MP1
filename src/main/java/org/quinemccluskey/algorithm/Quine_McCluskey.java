@@ -192,7 +192,7 @@ public class Quine_McCluskey {
     }
 
     /**
-     * Performs the 2nd step of the QMA.
+     * Performs the second step of the QMA.
      *
      * <p>
      *     This method determines the product of sums from the necessary prime implicants. It calls petricksMethod(),
