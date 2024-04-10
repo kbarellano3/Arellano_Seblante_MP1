@@ -3,13 +3,30 @@ package org.quinemccluskey.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a minterm in the boolean function
+/**
+ * Represents a minterm in the boolean function
+ *
+ * <p>
+ *     This class is used to represent a minterm and all terms that follow after operations are done in the minterms.
+ *     These terms are used in the QMA to be further simplified to boolean expressions.
+ * </p>
+ */
 public class Minterm {
     private final String minterm;
     private int onesCount;
     private final List<Integer> nums;
 
-    // Constructor for initializing minterm with value and length
+    /**
+     * Constructs the binary representation of a minterm.
+     *
+     * <p>
+     *     This method/constructor is responsible for converting each minterm integer into a binary string. This would
+     *     then be modified with leading zeros depending on the specified length of the maximum minterm. Additionally,
+     *     the number of ones in the minterm is counted to group them properly—a crucial step in the QMA.
+     * </p>
+     * @param value The integer value of the minterm being constructed.
+     * @param length The length of the minterm that serves as the basis for leading zeros.
+     */
     public Minterm(int value, int length) {
         String binary = Integer.toBinaryString(value);
         StringBuilder temp = new StringBuilder(binary);
@@ -29,6 +46,17 @@ public class Minterm {
         }
     }
 
+    /**
+     * Constructs the merged version of a minterm.
+     *
+     * <p>
+     *     This method is responsible for properly merging and formatting two minterms that are compatible for grouping.
+     *     The program does so by adding a "-" when two bits are different and updating their ones count.
+     * </p>
+     *
+     * @param minterm1 The first minterm to be compared.
+     * @param minterm2 The second minterm to be compared.
+     */
     // Constructor for combining two terms
     public Minterm(Minterm minterm1, Minterm minterm2) {
         StringBuilder temp = new StringBuilder();
@@ -51,14 +79,29 @@ public class Minterm {
         nums.addAll(minterm2.getNums());
     }
 
+    /**
+     * Getter for the binary string representation of a minterm.
+     *
+     * @return Returns the binary string representation of a minterm.
+     */
     String getString() {
         return minterm;
     }
 
+    /**
+     * Getter for the integer values of the minterms and terms being used in the QMA.
+     *
+     * @return Returns the list of integer values of the minterms and terms being used.
+     */
     List<Integer> getNums() {
         return nums;
     }
 
+    /**
+     * Getter for the number of ones in minterms and terms.
+     *
+     * @return Returns the number of ones in minterms and terms.
+     */
     int getOnesCount() {
         return onesCount;
     }
