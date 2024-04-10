@@ -62,9 +62,9 @@
         <!--Displays program name-->
         <Label styleClass="title" text="Quine-McCluskey Algorithm" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <effect>
-             <DropShadow height="77.01" radius="38.6" width="79.39">
+             <DropShadow height="78.2" radius="38.8975" width="79.39">
                  <color>
-                     <Color red="0.14132553339004517" green="0.25438597798347473" blue="0.18278102576732635" />
+                     <Color red="0.14000000059604645" green="0.25" blue="0.1784999966621399" opacity="0.7309644222259521" />
                  </color>
              </DropShadow>
          </effect></Label>
