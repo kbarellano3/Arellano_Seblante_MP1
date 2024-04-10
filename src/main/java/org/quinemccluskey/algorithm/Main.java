@@ -19,7 +19,6 @@ import java.io.IOException;
  *     program then processes these via the QMA once the user clicks the 'solve' button. The simplified expression/s
  *     are then outputted onto the program.
  * </p>
- *
  */
 public class Main extends Application {
 

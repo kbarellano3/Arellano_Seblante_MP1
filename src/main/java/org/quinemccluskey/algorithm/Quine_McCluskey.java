@@ -2,10 +2,13 @@ package org.quinemccluskey.algorithm;
 
 import java.util.*;
 
-// Hello! Please feel free to change variable names! :)
-// Comments are placeholders only for your own comments.
-// Note: This code does not implement bonus feature yet.
-// NOte from Sheianne: error handling when list of don't cares contains some minterms
+/**
+ * A class implementing the Quine-McCluskey algorithm for simplifying boolean expressions.
+ *
+ * <p>
+ *     This class is responsible for creating the main logic of the QMA, which is referenced by the Main Controller.
+ * </p>
+ */
 
 public class Quine_McCluskey {
 
@@ -15,11 +18,17 @@ public class Quine_McCluskey {
     private final ArrayList<Integer> dontCaresList;
     private ArrayList<String>[] solution;
     private final ArrayList<String> primeImplicants;
-    public final String startChar;
+    public final String startVar;
 
-    // Constructor for Quine_McCluskey algorithm
-    public Quine_McCluskey(String mintermsString, String dontCaresString, String startChar) {
-        this.startChar = startChar;
+    /**
+     * Constructs a Quine_McCluskey object with minterms, don't cares, and a start variable.
+     *
+     * @param mintermsString The user-input string of minterms separated by commas or spaces.
+     * @param dontCaresString The user-input string of don't cares separated by commas or spaces.
+     * @param startVar The user-input string that starts the letters to be used for the simplified boolean expression.
+     */
+    public Quine_McCluskey(String mintermsString, String dontCaresString, String startVar) {
+        this.startVar = startVar;
         // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
         int[] dontCares = isValid(dontCaresString);
@@ -99,6 +108,15 @@ public class Quine_McCluskey {
         return groups;
     }
 
+    /**
+     * Performs the first step of the QMA.
+     *
+     * <p>
+     *     This method determines the prime implicants from the list of binary string minterms. it implements the
+     *     groupTerms() method, which is put into an indefinite loop until no minterms and groups can be grouped
+     *     further. It then calls the solve2() method to çontinue the solving process.
+     * </p>
+     */
     // Perform 1st step of QM: Determine prime implicants from minterms
     public void solve1() {
         ArrayList<Minterm> remainingMinterms = new ArrayList<>();
@@ -155,6 +173,15 @@ public class Quine_McCluskey {
         solve2();
     }
 
+    /**
+     * Performs the 2nd step of the QMA.
+     *
+     * <p>
+     *     This method determines the product of sums from the necessary prime implicants. It calls petricksMethod(),
+     *     which is the method used for finding the essential and additional prime ipmlicants to be used.
+     * </p>
+     */
+
     // Perform 2nd step of QM: Determine product of sums from necessary PIs
     public void solve2() {
         if (!identifyPrimeImplicants()) {
@@ -173,8 +200,19 @@ public class Quine_McCluskey {
         }
     }
 
+    /**
+     * Converts a minterm or group of minterms to its symbolic expression.
+     *
+     * <p>
+     *     This method converts the binary representation of a term, with zeros having a prime, ones having none, and
+     *     "-" not being included, into an expression with English letters. This method is also responsible for
+     *     initializing the default start variable "A" or the custom start variable set by the user.
+     * </p>
+     * @param term
+     * @return
+     */
     String toSymbolicExpression(String term) {
-        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+        char start = startVar.isEmpty() ? 'A' : startVar.charAt(0);
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < term.length(); i++) {
@@ -201,10 +239,17 @@ public class Quine_McCluskey {
     }
 
 
+    /**
+     * Petrick's method: used to find essential and additional prime implicants.
+     *
+     * <p>
+     *
+     * </p>
+     */
     // Petrick's method; Used to find essential and additional PIs
     void petricksMethod() {
 
-        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+        char start = startVar.isEmpty() ? 'A' : startVar.charAt(0);
 
         List<List<String>> temp = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
@@ -364,6 +409,14 @@ public class Quine_McCluskey {
         return new HashSet<>(a).containsAll(b);
     }
 
+    /**
+     * Method that formats the solution list into a string.
+     *
+     * <p>
+     *     This method appends all elements of the solution list into a Stringbuilder, which returns a string.
+     * </p>
+     * @return Returns the result of the algorithm as a string.
+     */
     // Method to get results as a string
     public String getResultsAsString() {
         StringBuilder resultBuilder = new StringBuilder();
