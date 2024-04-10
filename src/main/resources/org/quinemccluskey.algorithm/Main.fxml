@@ -75,9 +75,9 @@
         <Label styleClass="headers" text="Start Variable:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
 
         <!--Text areas for user input-->
-        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="2">
+        <TextArea fx:id="mtTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter minterms (separated by space or comma)" styleClass="minterms-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.valignment="CENTER">
         </TextArea>
-        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="3">
+        <TextArea fx:id="dcTextArea" prefHeight="150.0" prefWidth="300.0" promptText="Enter don't cares (separated by space or comma)" styleClass="dontcares-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         </TextArea>
         <TextArea fx:id="startVariableTextArea" prefHeight="30.0" prefWidth="150.0" promptText="Enter start variable" styleClass="startvariable-box" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="5">
         </TextArea>
@@ -97,17 +97,17 @@
         </TextArea>
 
         <!--Assets-->
-        <ImageView fx:id="tabIconsImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+        <ImageView fx:id="tabIconsImage" fitHeight="31.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
                 <Image url="@../../tabIcons.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="guntherImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+        <ImageView fx:id="guntherImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
                 <Image url="@../../gunther.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="ricardioImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+        <ImageView fx:id="ricardioImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
                 <Image url="@../../ricardio.png" />
             </image>
