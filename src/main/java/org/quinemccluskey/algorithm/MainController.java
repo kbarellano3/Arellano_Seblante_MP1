@@ -20,7 +20,6 @@ import java.time.LocalTime;
  *     responsible for implementing the Quine_McCluskey Java class, invoking the algorithm for proper solving.
  * </p>
  */
-
 public class MainController {
 
     @FXML
@@ -52,6 +51,7 @@ public class MainController {
 
     @FXML
     private Label timeLabel;
+    private int numSuccessfulRuns = 0;
 
     /**
      * Method called when the user clicks the 'solve' button.
@@ -61,9 +61,6 @@ public class MainController {
      *     then outputs the proper boolean expression/error message onto another text field.
      * </p>
      */
-
-    private int numSuccessfulRuns = 0;
-
     public void solve() {
         String input1 = mtTextArea.getText();
         String input2 = dcTextArea.getText();
@@ -90,11 +87,18 @@ public class MainController {
         }
     }
 
+    /**
+     * Updates the text of the numSuccessfulRunsLabel.
+     *
+     * <p>
+     *     This method sets the text of the numSuccessfulRunsLabel to display the current number of successful runs.
+     * </p>
+     */
     private void updateNumSuccessfulRunsLabel() {
         numSuccessfulRunsLabel.setText("No. of Runs: " + numSuccessfulRuns);
     }
 
-
+  
     /**
      * Helper method which determines if a string is a number or not.
      *
@@ -137,6 +141,14 @@ public class MainController {
         return true;
     }
 
+    /**
+     * Method that intiailizes the controller's view.
+     *
+     * <p>
+     *     This method sets up the animations for character images, the label for the number of runs, and the timeline
+     *     animation to update the time label.
+     * </p>
+     */
     public void initialize() {
         // Create a translate transition for the Finn image
         TranslateTransition finnTransition = new TranslateTransition(Duration.seconds(1), finnImage);
@@ -181,9 +193,15 @@ public class MainController {
         timeline.play();
     }
 
+    /**
+     * Method that return the current time.
+     *
+     * <p>
+     *     This method uses the Java.time library to get the local time and displays it in [Hours]:[Minutes]:[Seconds].
+     * </p>
+     */
     private String getCurrentTime() {
         LocalTime time = LocalTime.now();
         return String.format("%02d:%02d:%02d", time.getHour(), time.getMinute(), time.getSecond());
     }
-
 }

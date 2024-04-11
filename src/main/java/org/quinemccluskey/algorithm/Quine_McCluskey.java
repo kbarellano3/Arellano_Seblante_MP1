@@ -2,11 +2,13 @@ package org.quinemccluskey.algorithm;
 
 import java.util.*;
 
-// Hello! Please feel free to change variable names! :)
-// Comments are placeholders only for your own comments.
-// Note: This code does not implement bonus feature yet.
-// NOte from Sheianne: error handling when list of don't cares contains some minterms
-
+/**
+ * A class implementing the Quine-McCluskey algorithm for simplifying boolean expressions.
+ *
+ * <p>
+ *     This class is responsible for creating the main logic of the QMA, which is referenced by the Main Controller.
+ * </p>
+ */
 public class Quine_McCluskey {
 
     private final Minterm[] minterms;
@@ -15,11 +17,17 @@ public class Quine_McCluskey {
     private final ArrayList<Integer> dontCaresList;
     private ArrayList<String>[] solution;
     private final ArrayList<String> primeImplicants;
-    public final String startChar;
+    public final String startVar;
 
-    // Constructor for Quine_McCluskey algorithm
-    public Quine_McCluskey(String mintermsString, String dontCaresString, String startChar) {
-        this.startChar = startChar;
+    /**
+     * Constructs a Quine_McCluskey object with minterms, don't cares, and a start variable.
+     *
+     * @param mintermsString The user-input string of minterms separated by commas or spaces.
+     * @param dontCaresString The user-input string of don't cares separated by commas or spaces.
+     * @param startVar The user-input string that starts the letters to be used for the simplified boolean expression.
+     */
+    public Quine_McCluskey(String mintermsString, String dontCaresString, String startVar) {
+        this.startVar = startVar;
         // Validate and initialize minterms and don't cares
         int[] minterms = isValid(mintermsString);
         int[] dontCares = isValid(dontCaresString);
@@ -59,7 +67,18 @@ public class Quine_McCluskey {
         Arrays.sort(this.minterms, new OnesComparator());
     }
 
-    // Validate and parse input string to array of integers
+    /**
+     * Validates and parses the input string into an array of integers.
+     *
+     * <p>
+     *     This method validates by throwing a RuntimeException for non-integer values or duplicate entries. If any
+     *     such exception happens, an "Invalid input" message is outputted.
+     * </p>
+     *
+     * @param input The input string to be validated and parsed.
+     * @return Returns an array of integers parsed from the input string.
+     * @throws RuntimeException Exception if the input string is invalid.
+     */
     private int[] isValid(String input) {
         input = input.replace(",", " ");
         if (input.trim().isEmpty()) {
@@ -85,7 +104,16 @@ public class Quine_McCluskey {
         return temp;
     }
 
-    // Group terms based on ones count
+    /**
+     * Groups minterms based on the number of their ones.
+     *
+     * <p>
+     *     This method adds minterms into a list of groups based on the called getOnesCount() method and returns the
+     *     respective groups.
+     * </p>
+     * @param termsArray
+     * @return
+     */
     private ArrayList<Minterm>[] groupTerms(Minterm[] termsArray) {
         ArrayList<Minterm>[] groups = new ArrayList[termsArray[termsArray.length - 1].getOnesCount() + 1];
 
@@ -99,7 +127,15 @@ public class Quine_McCluskey {
         return groups;
     }
 
-    // Perform 1st step of QM: Determine prime implicants from minterms
+    /**
+     * Performs the first step of the QMA.
+     *
+     * <p>
+     *     This method determines the prime implicants from the list of binary string minterms. it implements the
+     *     groupTerms() method, which is put into an indefinite loop until no minterms and groups can be grouped
+     *     further. It then calls the solve2() method to çontinue the solving process.
+     * </p>
+     */
     public void solve1() {
         ArrayList<Minterm> remainingMinterms = new ArrayList<>();
         ArrayList<Minterm>[] groupedTerms = groupTerms(minterms);
@@ -155,7 +191,14 @@ public class Quine_McCluskey {
         solve2();
     }
 
-    // Perform 2nd step of QM: Determine product of sums from necessary PIs
+    /**
+     * Performs the second step of the QMA.
+     *
+     * <p>
+     *     This method determines the product of sums from the necessary prime implicants. It calls petricksMethod(),
+     *     which is the method used for finding the essential and additional prime ipmlicants to be used.
+     * </p>
+     */
     public void solve2() {
         if (!identifyPrimeImplicants()) {
             if (!rowDominance()) {
@@ -173,8 +216,19 @@ public class Quine_McCluskey {
         }
     }
 
+    /**
+     * Converts a minterm or group of minterms to its symbolic expression.
+     *
+     * <p>
+     *     This method converts the binary representation of a term, with zeros having a prime, ones having none, and
+     *     "-" not being included, into an expression with English letters. This method is also responsible for
+     *     initializing the default start variable "A" or the custom start variable set by the user.
+     * </p>
+     * @param term String minterm or group of minterms to be converted.
+     * @return Returns the symbolic expression of a minterm or group of minterms.
+     */
     String toSymbolicExpression(String term) {
-        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+        char start = startVar.isEmpty() ? 'A' : startVar.charAt(0);
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < term.length(); i++) {
@@ -201,10 +255,17 @@ public class Quine_McCluskey {
     }
 
 
-    // Petrick's method; Used to find essential and additional PIs
+    /**
+     * Petrick's method: used to find essential and additional prime implicants.
+     *
+     * <p>
+     *     This method involves multiplying terms and performing manipulations to identify the necessary prime
+     *     implicants for the boolean expression. This is a method done after the QMA.
+     * </p>
+     */
     void petricksMethod() {
 
-        char start = startChar.isEmpty() ? 'A' : startChar.charAt(0);
+        char start = startVar.isEmpty() ? 'A' : startVar.charAt(0);
 
         List<List<String>> temp = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
@@ -249,7 +310,18 @@ public class Quine_McCluskey {
         }
     }
 
-    // Multiply terms according to Petrick's method
+    /**
+     * Multiplies terms according to Petrick's method.
+     *
+     * <p>
+     *     This method performs the multiplication of terms provided by the list of the necessary prime implicants.
+     *     It recursively multiples terms from the array and add them to the result list. This results in a a minimal
+     *     sum-of-products expression.
+     * </p>
+     * @param p The array of lists of terms to be multiplied.
+     * @param k The index indicating the current list being processed.
+     * @return A list of combined terms representing the minimal SOP expression.
+     */
     List<String> multiply(ArrayList<String>[] p, int k) {
         if (k >= p.length - 1) {
             return p[k];
@@ -269,7 +341,15 @@ public class Quine_McCluskey {
         return multiply(p, k + 1);
     }
 
-    // Perform column dominance checking
+    /**
+     * Checks for column dominance among the prime implicants.
+     *
+     * <p>
+     *     This method returns true once it has determined that all prime implicants that cover certain minterms do
+     *     not share other minterms, indicating that the covered implicants are redunant and can be removed.
+     * </p>
+     * @return Returns true if column dominance simplification was performed
+     */
     private boolean columnDominance() {
         boolean flag = false;
         List<List<Integer>> cols = new ArrayList<>();
@@ -300,7 +380,15 @@ public class Quine_McCluskey {
         return flag;
     }
 
-    // Perform row dominance checking
+    /**
+     * Checks for row dominance among the prime implicants.
+     *
+     * <p>
+     *     This method returns true once it has determined that all the prime implicants can be covered by another
+     *     prime implicant. This reduces redundancy of prime implicants.
+     * </p>
+     * @return Returns true if row dominance simplification was performed
+     */
     private boolean rowDominance() {
         boolean flag = false;
         for (int i = 0; i < finalMinterms.size() - 1; i++) {
@@ -320,7 +408,15 @@ public class Quine_McCluskey {
         return flag;
     }
 
-    // Identify prime implicants
+    /**
+     * Identifies from a list of minterms or group of minterms if they are prime implicants.
+     *
+     * <p>
+     *     This method analyzes the list of minterms or group of minterms iteratively. It checks if the prime implicant
+     *     covers a minterm that isn't covered by any other prime implicant in the list.
+     * </p>
+     * @return Returns true if the minterms or group of minterms are prime implicants.
+     */
     private boolean identifyPrimeImplicants() {
         List<List<Integer>> cols = new ArrayList<>();
         for (int i = 0; i < mintermsList.size(); i++) {
@@ -352,7 +448,16 @@ public class Quine_McCluskey {
         return flag;
     }
 
-    // Check if one minterm contains another
+    /**
+     * Checks if one minterm contains another.
+     *
+     * <p>
+     *     This method checks if term1 contains all the integers that are covered by term2.
+     * </p>
+     * @param term1 the first minterm or group of minterms
+     * @param term2 the second minterm or group of minterms
+     * @return true if term1 contains term2, otherwise false
+     */
     boolean contains(Minterm term1, Minterm term2) {
         if (term1.getNums().size() <= term2.getNums().size()) {
             return false;
@@ -364,7 +469,14 @@ public class Quine_McCluskey {
         return new HashSet<>(a).containsAll(b);
     }
 
-    // Method to get results as a string
+    /**
+     * Method that formats the solution list into a string.
+     *
+     * <p>
+     *     This method appends all elements of the solution list into a Stringbuilder, which returns a string.
+     * </p>
+     * @return Returns the result of the algorithm as a string.
+     */
     public String getResultsAsString() {
         StringBuilder resultBuilder = new StringBuilder();
         for (int i = 0; i < solution.length; i++) {
