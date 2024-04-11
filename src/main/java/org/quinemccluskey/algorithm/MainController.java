@@ -71,19 +71,19 @@ public class MainController {
             qm.solve1();
             outputTextArea.setText(qm.getResultsAsString());
             if (isNumber(input3)) {
-                outputTextArea.setText("INVALID INPUT: Use letters only for your starting variable.");
+                outputTextArea.setText("INVALID INPUT: Use letters only for your starting variable");
             } else {
                 numSuccessfulRuns++;
                 updateNumSuccessfulRunsLabel();
             }
         } catch (RuntimeException e) {
             if (input1.isEmpty()) {
-                outputTextArea.setText("You did not input any minterms.");
+                outputTextArea.setText("INVALID INPUT: You did not input any minterms");
             } else if (!checkIfNumber(input1) && !checkIfNumber(input2)) {
-                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
+                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number");
             } else if (!checkIfNumber(input1) || !checkIfNumber(input2)) {
-                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number.");
-            } else outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms.");
+                outputTextArea.setText("INVALID INPUT: One of your inputs is not a number");
+            } else outputTextArea.setText("INVALID INPUT: Your minterms and don't cares have one or more common terms");
         }
     }
 
@@ -98,6 +98,7 @@ public class MainController {
         numSuccessfulRunsLabel.setText("No. of Runs: " + numSuccessfulRuns);
     }
 
+  
     /**
      * Helper method which determines if a string is a number or not.
      *
