@@ -9,9 +9,9 @@ public class OnesComparator implements Comparator<Minterm> {
     /**
      * Sorts minterms in ascending order of ones count.
      *
-     * @param t1 the first object to be compared.
-     * @param t2 the second object to be compared.
-     * @return Returns a negative, zero, or positive integer depending on the outcome of comparing t1 and t2.
+     * @param t1 Minterm object t1 to be compared
+     * @param t2 Minterm object t2 to be compared
+     * @return Integer of a negative, zero, or positive value depending on the outcome of comparing t1 and t2
      */
     @Override
     public int compare(Minterm t1, Minterm t2) {

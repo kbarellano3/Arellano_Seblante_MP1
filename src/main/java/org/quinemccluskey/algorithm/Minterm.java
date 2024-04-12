@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a minterm in the boolean function
+ * Represents a minterm in the boolean function.
  *
  * <p>
  *     This class is used to represent a minterm and all terms that follow after operations are done in the minterms.
@@ -24,8 +24,9 @@ public class Minterm {
      *     then be modified with leading zeros depending on the specified length of the maximum minterm. Lastly,
      *     the number of ones in the minterm is counted to group them properly.
      * </p>
-     * @param value Integer value of the minterm being constructed.
-     * @param length Integer length of the minterm that serves as the basis for leading zeros.
+     *
+     * @param value Integer value of the minterm being constructed
+     * @param length Integer length of the minterm that serves as the basis for leading zeros
      */
     public Minterm(int value, int length) {
         String binary = Integer.toBinaryString(value);
@@ -54,8 +55,8 @@ public class Minterm {
      *     The program does so by adding a "-" when two bits are different and updating their ones count.
      * </p>
      *
-     * @param minterm1 First minterm object to be compared.
-     * @param minterm2 Second minterm object to be compared.
+     * @param minterm1 Minterm object of the first minterm to be compared
+     * @param minterm2 Minterm object of the second minterm to be compared
      */
     // Constructor for combining two terms
     public Minterm(Minterm minterm1, Minterm minterm2) {
@@ -82,7 +83,7 @@ public class Minterm {
     /**
      * Getter for the binary string representation of a minterm.
      *
-     * @return Returns the binary string representation of a minterm.
+     * @return String binary representation of a minterm
      */
     String getString() {
         return minterm;
@@ -91,7 +92,7 @@ public class Minterm {
     /**
      * Getter for the integer values of the minterms and terms being used in the QMA.
      *
-     * @return Returns the list of integer values of the minterms and terms being used.
+     * @return List of integer values of the minterms and terms being used
      */
     List<Integer> getNums() {
         return nums;
@@ -100,7 +101,7 @@ public class Minterm {
     /**
      * Getter for the number of ones in minterms and terms.
      *
-     * @return Returns the number of ones in minterms and terms.
+     * @return Integer count of ones in the minterms and terms.
      */
     int getOnesCount() {
         return onesCount;
