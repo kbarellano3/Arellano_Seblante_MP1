@@ -99,27 +99,27 @@
         <!--Assets-->
         <ImageView fx:id="tabIconsImage" fitHeight="31.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
-                <Image url="@../../Assets/tabIcons.png" />
+                <Image url="@../../tabIcons.png" />
             </image>
         </ImageView>
         <ImageView fx:id="guntherImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
-                <Image url="@../../Assets/gunther.png" />
+                <Image url="@../../gunther.png" />
             </image>
         </ImageView>
         <ImageView fx:id="ricardioImage" fitHeight="30.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
             <image>
-                <Image url="@../../Assets/ricardio.png" />
+                <Image url="@../../ricardio.png" />
             </image>
         </ImageView>
         <ImageView fx:id="finnImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <image>
-                <Image url="@../../Assets/finn.png" />
+                <Image url="@../../finn.png" />
             </image>
         </ImageView>
         <ImageView fx:id="jakeImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
             <image>
-                <Image url="@../../Assets/jake.png" />
+                <Image url="@../../jake.png" />
             </image>
         </ImageView>
         <ImageView fx:id="bmoImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5">
@@ -129,7 +129,7 @@
         </ImageView>
         <ImageView fx:id="iceKingImage" fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="8">
             <image>
-                <Image url="@../../Assets/iceKing.png" />
+                <Image url="@../../iceKing.png" />
             </image>
         </ImageView>
     </children>
