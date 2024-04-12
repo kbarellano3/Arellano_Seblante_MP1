@@ -15,9 +15,9 @@ public class Helper {
      *     This method checks whether the arrays of minterms and don't cares contain any duplicate values.
      * </p>
      *
-     * @param minterms Integer array of minterms.
-     * @param dontCares Integer array of don't cares.
-     * @return Returns true if both arrays have no duplicates, false otherwise.
+     * @param minterms Integer array of minterms
+     * @param dontCares Integer array of don't cares
+     * @return Returns true if both arrays have no duplicates, false otherwise
      */
     public static boolean checkInputs(int[] minterms, int[] dontCares) {
         List<Integer> temp = new ArrayList<>();
@@ -40,9 +40,9 @@ public class Helper {
      *     by appending characters from each string while avoiding duplicates.
      * </p>
      *
-     * @param minterm1 The first binary string representing a minterm or don't care.
-     * @param minterm2 The second binary string representing a minterm or don't care.
-     * @return Returns the combined binary string with no duplicate characters.
+     * @param minterm1 String of the first binary minterm representing a minterm or don't care
+     * @param minterm2 String of the second binary minterm representing a minterm or don't care
+     * @return String combination of the two minterms with no duplicate characters
      */
     public static String mixTerms(String minterm1, String minterm2) {
         StringBuilder mixed = new StringBuilder();
@@ -75,9 +75,9 @@ public class Helper {
      *     only one bit position.
      * </p>
      *
-     * @param minterm1 The first minterm object.
-     * @param minterm2 The second minterm object.
-     * @return Returns true if the minterms can be combined, false otherwise.
+     * @param minterm1 Minterm object of the first minterm
+     * @param minterm2 Minterm object of the second minterm
+     * @return Boolean determining if the minterms can be combined
      */
     public static boolean isValidCombination(Minterm minterm1, Minterm minterm2) {
         if (minterm1.getString().length() != minterm2.getString().length())

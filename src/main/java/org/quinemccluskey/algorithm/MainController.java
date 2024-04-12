@@ -106,8 +106,9 @@ public class MainController {
      *     This is a boolean method which determines that a string is an integer by parsing it and returning true. If it
      *     yields in a NumberFormatException, it determines that the string is not a number by returning false.
      * </p>
-     * @param x The string to be determined.
-     * @return Returns the truth value of param x as a number.
+     *
+     * @param x String to be determined
+     * @return Boolean value of param x as a number
      */
     public static boolean isNumber(String x) {
         try {
@@ -128,8 +129,9 @@ public class MainController {
      *     This method first removes the delimiters—either commas or spaces—from a given string of minterms/don't
      *     cares. It then calls the isNumber() method to determine the boolean value of the string.
      * </p>
-     * @param str The string separated by commas or spaces.
-     * @return Returns the truth value of param str as a number.
+     *
+     * @param str String separated by commas or spaces
+     * @return Boolean value of param str as a number
      */
     public static boolean checkIfNumber(String str) {
         String[] numbers = str.split("[,\\s]+");
