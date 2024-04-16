@@ -144,7 +144,7 @@ public class MainController {
     }
 
     /**
-     * Method that intiailizes the controller's view.
+     * Method that initializes the controller's view.
      *
      * <p>
      *     This method sets up the animations for character images, the label for the number of runs, and the timeline
